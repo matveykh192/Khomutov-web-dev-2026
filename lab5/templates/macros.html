@@ -1,0 +1,41 @@
+{% macro user_form(user=None, errors={}, roles=[]) %}
+
+<label>Имя*</label><br>
+<input name="first_name" value="{{ user.first_name if user else '' }}"
+    class="{{ 'invalid' if errors.get('first_name') }}">
+<div class="error">{{ errors.get('first_name', '') }}</div>
+
+<label>Фамилия</label><br>
+<input name="last_name" value="{{ user.last_name if user else '' }}"
+    class="{{ 'invalid' if errors.get('last_name') }}">
+<div class="error">{{ errors.get('last_name', '') }}</div>
+
+<label>Отчество</label><br>
+<input name="middle_name" value="{{ user.middle_name if user else '' }}">
+<p></p>
+
+{% if not user %}
+    <label>Логин*</label><br>
+    <input name="login" class="{{ 'invalid' if errors.get('login') }}">
+    <div class="error">{{ errors.get('login', '') }}</div>
+
+    <label>Пароль*</label><br>
+    <input type="password" name="password" class="{{ 'invalid' if errors.get('password') }}">
+    <div class="error">{{ errors.get('password', '') }}</div>
+{% endif %}
+
+<label>Роль</label><br>
+<select name="role_id" {% if not current_user.is_admin %}disabled{% endif %}>
+    <option value="">-- не выбрана --</option>
+    {% for r in roles %}
+        <option value="{{ r.id }}"
+            {% if user and user.role_id == r.id %}selected{% endif %}>
+            {{ r.name }}
+        </option>
+    {% endfor %}
+</select>
+
+<br><br>
+<button type="submit">Сохранить</button>
+
+{% endmacro %}

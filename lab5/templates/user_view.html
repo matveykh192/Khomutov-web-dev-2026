@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Данные пользователя</h2>
+
+<table>
+    <tr>
+        <td>ID</td>
+        <td>{{ user.id }}</td>
+    </tr>
+    <tr>
+        <td>Логин</td>
+        <td>{{ user.login }}</td>
+    </tr>
+    <tr>
+        <td>Фамилия</td>
+        <td>{{ user.last_name }}</td>
+    </tr>
+    <tr>
+        <td>Имя</td>
+        <td>{{ user.first_name }}</td>
+    </tr>
+    <tr>
+        <td>Отчество</td>
+        <td>{{ user.middle_name }}</td>
+    </tr>
+    <tr>
+        <td>Роль</td>
+        <td>{{ user.role.name if user.role else "-" }}</td>
+    </tr>
+</table>
+
+{% if current_user.is_authenticated and current_user.can('edit', user) %}
+    <br>
+    <a href="{{ url_for('edit_user', id=user.id) }}">
+        <button>Редактировать</button>
+    </a>
+{% endif %}
+
+{% endblock %}

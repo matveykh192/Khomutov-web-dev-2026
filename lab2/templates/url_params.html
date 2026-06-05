@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Параметры URL{% endblock %}
+{% block content %}
+<h1>Параметры URL</h1>
+<p class="text-muted">Параметры из строки запроса (query string).</p>
+
+{% if params %}
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr><th>Параметр</th><th>Значение(я)</th></tr>
+        </thead>
+        <tbody>
+            {% for key, values in params.items() %}
+            <tr>
+                <td>{{ key }}</td>
+                <td>{{ values | join(', ') }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="alert alert-warning">Параметры URL не переданы. Попробуйте добавить к URL <code>?foo=bar&num=42</code></div>
+{% endif %}
+{% endblock %}

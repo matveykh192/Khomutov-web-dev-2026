@@ -1,0 +1,16 @@
+{# Параметры:
+     review        — объект отзыва
+     rating_labels — словарь подписей #}
+<div class="card mb-3">
+    <div class="card-body">
+        <div class="d-flex justify-content-between mb-2">
+            <strong>{{ review.user.full_name }}</strong>
+            <span class="text-muted">{{ review.created_at.strftime('%d.%m.%Y %H:%M') }}</span>
+        </div>
+        <p class="mb-2">
+            <span class="rating">★ {{ review.rating }}</span>
+            <span class="text-muted">— {{ rating_labels[review.rating] }}</span>
+        </p>
+        <p class="mb-0" style="white-space: pre-line;">{{ review.text }}</p>
+    </div>
+</div>

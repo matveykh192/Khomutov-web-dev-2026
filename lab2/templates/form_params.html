@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Параметры формы{% endblock %}
+{% block content %}
+<h1>Параметры формы</h1>
+
+<form method="POST" action="/form-params" class="mb-4">
+    <div class="mb-3">
+        <label class="form-label">Имя</label>
+        <input type="text" name="name" class="form-control" placeholder="Введите имя">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="text" name="email" class="form-control" placeholder="Введите email">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Сообщение</label>
+        <textarea name="message" class="form-control" rows="3" placeholder="Введите сообщение"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Отправить</button>
+</form>
+
+{% if method == 'POST' and form_data %}
+    <h5>Полученные данные формы:</h5>
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr><th>Поле</th><th>Значение(я)</th></tr>
+        </thead>
+        <tbody>
+            {% for key, values in form_data.items() %}
+            <tr>
+                <td>{{ key }}</td>
+                <td>{{ values | join(', ') }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+{% endblock %}

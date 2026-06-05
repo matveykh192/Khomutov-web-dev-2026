@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form method="post">
+    <input name="username" placeholder="Логин">
+    <input name="password" type="password" placeholder="Пароль">
+    <label>
+        <input type="checkbox" name="remember"> Запомнить меня
+    </label>
+    <button type="submit">Log in</button>
+</form>
+{% endblock %}

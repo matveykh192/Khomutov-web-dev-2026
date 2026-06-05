@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% from "macros.html" import render_field %}
+{% block content %}
+<h2>{{ title }}</h2>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    {% if form.login is defined %}{{ render_field(form.login) }}{% endif %}
+    {% if form.password is defined %}{{ render_field(form.password) }}{% endif %}
+    {{ render_field(form.last_name) }}
+    {{ render_field(form.first_name) }}
+    {{ render_field(form.middle_name) }}
+    {{ render_field(form.role) }}
+    {{ form.submit(class="btn btn-success") }}
+    <a href="{{ url_for('index') }}" class="btn btn-secondary">Отмена</a>
+</form>
+{% endblock %}

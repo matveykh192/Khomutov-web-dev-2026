@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Главная{% endblock %}
+{% block content %}
+<ul>
+    <li><a href="/url-params?foo=bar&num=42">Параметры URL</a></li>
+    <li><a href="/headers">Заголовки запроса</a></li>
+    <li><a href="/cookies">Cookie</a></li>
+    <li><a href="/form-params">Параметры формы</a></li>
+    <li><a href="/phone">Валидация телефона</a></li>
+</ul>
+{% endblock %}

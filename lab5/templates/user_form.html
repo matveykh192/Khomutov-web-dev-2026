@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros with context %}
+
+{% block content %}
+
+<h2>{{ "Редактирование" if user else "Создание пользователя" }}</h2>
+
+<form method="post">
+    {{ macros.user_form(user, errors if errors else {}, roles) }}
+</form>
+
+{% endblock %}

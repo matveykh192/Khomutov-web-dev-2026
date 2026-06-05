@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Список пользователей</h2>
+
+<table>
+    <tr>
+        <th>#</th>
+        <th>ФИО</th>
+        <th>Роль</th>
+        <th>Действия</th>
+    </tr>
+
+    {% for u in users %}
+    <tr>
+        <td>{{ loop.index }}</td>
+
+        <td>
+            {{ u.last_name or '' }}
+            {{ u.first_name }}
+            {{ u.middle_name or '' }}
+        </td>
+
+        <td>{{ u.role.name if u.role else "-" }}</td>
+
+        <td>
+            {% if current_user.is_authenticated and current_user.can('show', u) %}
+                <a href="{{ url_for('view_user', id=u.id) }}">Просмотр</a>
+            {% endif %}
+
+            {% if current_user.is_authenticated and current_user.can('edit', u) %}
+                | <a href="{{ url_for('edit_user', id=u.id) }}">Редактировать</a>
+            {% endif %}
+
+            {% if current_user.is_authenticated and current_user.can('delete', u) %}
+                |
+                <form method="post" action="{{ url_for('delete_user', id=u.id) }}" style="display:inline;">
+                    <button type="submit"
+                        onclick="return confirm('Удалить пользователя {{ u.first_name }}?')">
+                        Удалить
+                    </button>
+                </form>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br>
+
+{% if current_user.is_authenticated and current_user.can('create') %}
+    <a href="{{ url_for('create_user') }}">
+        <button>Создание пользователя</button>
+    </a>
+{% endif %}
+
+{% endblock %}

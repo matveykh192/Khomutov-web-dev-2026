@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Отчёт по страницам</h2>
+
+<p><a href="{{ url_for('reports.index') }}">&larr; Назад к журналу</a></p>
+
+<table>
+    <tr>
+        <th>№</th>
+        <th>Страница</th>
+        <th>Количество посещений</th>
+    </tr>
+    {% for path, cnt in rows %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ path }}</td>
+            <td>{{ cnt }}</td>
+        </tr>
+    {% else %}
+        <tr><td colspan="3">Данных нет.</td></tr>
+    {% endfor %}
+</table>
+
+<br>
+<a href="{{ url_for('reports.by_pages_export') }}">
+    <button>Экспорт в CSV</button>
+</a>
+
+{% endblock %}

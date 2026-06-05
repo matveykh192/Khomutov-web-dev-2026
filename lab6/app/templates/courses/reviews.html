@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% from 'pagination.html' import render_pagination %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="d-flex align-items-center mb-4">
+        <div>
+            <a href="{{ url_for('courses.show', course_id=course.id) }}"
+               class="text-decoration-none">← к курсу</a>
+            <h2 class="mt-2 mb-0">Отзывы к курсу «{{ course.name }}»</h2>
+        </div>
+        <div class="ms-auto text-end">
+            <div class="rating fs-4">★ {{ "%.2f" | format(course.rating) }}</div>
+            <small class="text-muted">{{ course.rating_num }} отзыв(ов)</small>
+        </div>
+    </div>
+
+    <form method="GET" class="row align-items-end mb-4">
+        <div class="col-md-6 mb-2">
+            <label for="sort" class="form-label">Сортировка</label>
+            <select class="form-select" id="sort" name="sort">
+                {% for value, label in sort_options %}
+                    <option value="{{ value }}" {% if value == sort_order %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2 mb-2">
+            <button type="submit" class="btn btn-dark w-100">Применить</button>
+        </div>
+    </form>
+
+    {% if reviews %}
+        {% for review in reviews %}
+            {% include 'courses/_review_item.html' %}
+        {% endfor %}
+
+        <div class="my-4">
+            {{ render_pagination(pagination, request.endpoint, {'course_id': course.id, 'sort': sort_order}) }}
+        </div>
+    {% else %}
+        <p class="text-muted">К этому курсу пока нет отзывов.</p>
+    {% endif %}
+
+    {% include 'courses/_review_form.html' %}
+</div>
+{% endblock %}

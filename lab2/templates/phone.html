@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Валидация телефона{% endblock %}
+{% block content %}
+<h1>Проверка номера телефона</h1>
+
+<form method="POST" action="/phone" class="mb-4" style="max-width: 400px;">
+    <div class="mb-3">
+        <label class="form-label">Номер телефона</label>
+        <input
+            type="text"
+            name="phone"
+            class="form-control {% if error %}is-invalid{% endif %}"
+            value="{{ phone_input }}"
+            placeholder="+7 (123) 456-78-90"
+        >
+        {% if error %}
+            <div class="invalid-feedback">{{ error }}</div>
+        {% endif %}
+    </div>
+    <button type="submit" class="btn btn-primary">Проверить</button>
+</form>
+
+{% if formatted %}
+    <div class="alert alert-success">
+        Отформатированный номер: <strong>{{ formatted }}</strong>
+    </div>
+{% endif %}
+{% endblock %}

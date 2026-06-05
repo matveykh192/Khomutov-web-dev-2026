@@ -1,0 +1,49 @@
+{# Подключается в show.html и reviews.html.
+   Параметры:
+     course      — текущий курс
+     user_review — отзыв текущего пользователя (или None)
+     rating_labels — словарь { 5: 'отлично', ... } для подписей #}
+
+<section class="my-5">
+    <h3 class="mb-3">Ваш отзыв</h3>
+
+    {% if not current_user.is_authenticated %}
+        <p class="text-muted">
+            Чтобы оставить отзыв, <a href="{{ url_for('auth.login') }}">войдите</a> в аккаунт.
+        </p>
+    {% elif user_review %}
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-2">
+                    <strong>{{ user_review.user.full_name }}</strong>
+                    <span class="text-muted">
+                        {{ user_review.created_at.strftime('%d.%m.%Y %H:%M') }}
+                    </span>
+                </div>
+                <p class="mb-2">
+                    Оценка: <strong>{{ user_review.rating }}</strong>
+                    — {{ rating_labels[user_review.rating] }}
+                </p>
+                <p class="mb-0">{{ user_review.text }}</p>
+            </div>
+        </div>
+    {% else %}
+        <form method="POST" action="{{ url_for('courses.create_review', course_id=course.id) }}">
+            <div class="mb-3">
+                <label for="review-rating" class="form-label">Оценка</label>
+                <select class="form-select" id="review-rating" name="rating">
+                    {% for value in [5, 4, 3, 2, 1, 0] %}
+                        <option value="{{ value }}" {% if value == 5 %}selected{% endif %}>
+                            {{ rating_labels[value] }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="review-text" class="form-label">Текст отзыва</label>
+                <textarea class="form-control" id="review-text" name="text" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-dark">Оставить отзыв</button>
+        </form>
+    {% endif %}
+</section>
