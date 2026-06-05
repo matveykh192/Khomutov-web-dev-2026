@@ -1,0 +1,62 @@
+{% extends 'base.html' %} {% block content %}
+<div class="row">
+  <div class="col-lg-8 mx-auto">
+    <!-- Заголовок поста -->
+    <h1 class="my-4">{{ post.title }}</h1>
+
+    <!-- Информация об авторе и дате -->
+    <p class="text-muted">
+      Опубликовано {{ post.date.strftime('%d.%m.%Y') }} | Автор: {{ post.author }}
+    </p>
+
+    <!-- Изображение поста -->
+    <img
+      class="img-fluid mb-4"
+      src="{{ url_for('static', filename='images/' + post.image_id) }}"
+      alt="Post image"
+    />
+
+    <!-- Текст поста -->
+    <div class="post-text mb-5">{{ post.text|safe }}</div>
+
+    <!-- Форма "Оставьте комментарий" -->
+    <h3 class="mb-4">Оставьте комментарий</h3>
+    <form method="post" action="#" class="mb-5">
+      <div class="mb-3">
+        <label for="commentText" class="form-label">Ваш комментарий</label>
+        <textarea
+          class="form-control"
+          id="commentText"
+          rows="3"
+          required
+        ></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Отправить</button>
+    </form>
+
+    <!-- Комментарии и ответы -->
+    <h3 class="mb-4">Комментарии</h3>
+    {% if post.comments %} {% for comment in post.comments %}
+    <div class="media mb-4">
+      <div class="media-body">
+        <h5 class="mt-0">{{ comment.author }}</h5>
+        <p>{{ comment.text }}</p>
+        <!-- Вложенные комментарии (ответы) -->
+        {% if comment.replies %}
+        <div class="media mt-3 ms-4">
+          {% for reply in comment.replies %}
+          <div class="media-body">
+            <h5 class="mt-0">{{ reply.author }}</h5>
+            <p>{{ reply.text }}</p>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %} {% else %}
+    <p class="text-muted">Пока нет комментариев. Будьте первым!</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

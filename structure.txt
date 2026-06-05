@@ -1,0 +1,24 @@
+.
+├── app
+│   ├── app.py
+│   ├── static
+│   │   ├── images
+│   │   │   ├── 2d2ab7df-cdbc-48a8-a936-35bba702def5.jpg
+│   │   │   ├── 6e12f3de-d5fd-4ebb-855b-8cbc485278b7.jpg
+│   │   │   ├── 7d4e9175-95ea-4c5f-8be5-92a6b708bb3c.jpg
+│   │   │   ├── afc2cfe7-5cac-4b80-9b9a-d5c65ef0c728.jpg
+│   │   │   ├── avatar.jpg
+│   │   │   ├── cab5b7f2-774e-4884-a200-0c0180fa777f.jpg
+│   │   │   └── post-example-page.png
+│   │   └── styles.css
+│   ├── templates
+│   │   ├── about.html
+│   │   ├── base.html
+│   │   ├── index.html
+│   │   └── posts.html
+│   └── tests
+│       ├── conftest.py
+│       └── test_posts.py
+├── requirements.txt
+├── structure.txt
+
